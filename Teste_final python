@@ -1,0 +1,16 @@
+from datetime import date
+from BD_usuario import imprimir_BD, alterar_campo, adicionar_campo, remover_campo
+
+
+imprimir_BD()
+print('\n')
+
+
+alterar_campo('senha', '98', 'Tadeu')
+adicionar_campo('22/03/2021', 'Carla', 'carla@outlook.com', '2264')
+remover_campo ('Amanda')
+
+
+print('\n')
+imprimir_BD()
+
