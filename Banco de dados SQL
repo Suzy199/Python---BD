@@ -1,0 +1,11 @@
+use usuario;
+create table usuario (
+	data_de_criacao varchar(15),
+	nome varchar(50) primary key,
+    email varchar(30),
+    senha varchar(10) not null);
+
+insert into usuario values ('12/04/2022', 'Clarice', 'clarice@hotmail.com', '123');
+insert into usuario values ('15/09/2021', 'Amanda', 'amanda@hotmail.com', '342');
+insert into usuario values ('31/01/2020', 'Jose', 'jose@hotmail.com', '789');
+insert into usuario values('23/03/2021', 'Tadeu', 'Tadeu@hotmail.com', '456');
