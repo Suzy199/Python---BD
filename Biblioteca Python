@@ -1,0 +1,102 @@
+from datetime import date
+from operator import concat
+import mysql.connector
+from mysql.connector import Error
+
+def conecta_banco():
+
+    try:
+        return mysql.connector.connect (
+            host = 'localhost',
+            user = 'root',
+            password = '2580',
+            database = 'usuario'
+        )
+    
+    except Error as erro:
+        print('Erro na conexão com o BD:', erro)
+
+
+def processa_comando(conexao, comando):
+
+    try:
+        cursor = conexao.cursor()
+        cursor.execute(comando)
+        return cursor
+    
+    except Error as erro:
+        print('Erro na execução do SQL:', erro)
+
+
+def exibe_resposta(r):
+    
+    for result in r:
+        print('Dados recebidos:', result)
+
+
+
+
+def imprimir_BD ():
+    conexaoBD = conecta_banco()
+
+    try: 
+        if (conexaoBD.is_connected()):
+            sql = 'SELECT * FROM usuario'
+            resposta = processa_comando(conexaoBD, sql)
+            exibe_resposta(resposta)
+        
+    except Error as erro:
+        print('Erro no main:', erro)    
+
+
+
+def alterar_campo (item_a_mudar, novo_valor, referencia_linha):
+    conexaoBD = conecta_banco()
+
+    try: 
+        if (conexaoBD.is_connected()):
+            sql = "UPDATE usuario SET " + item_a_mudar + " = '" + novo_valor + "' where nome = '" + referencia_linha + "'"
+            print(sql)
+            resposta = processa_comando(conexaoBD, sql)
+            conexaoBD.commit()
+            exibe_resposta(resposta)
+        
+    except Error as erro:
+        print('Erro no main:', erro)    
+
+
+
+def adicionar_campo (data,nome, email, senha):
+    conexaoBD = conecta_banco()
+
+    try: 
+        if (conexaoBD.is_connected()):
+            sql = "insert into usuario values ('" + data + "', '" + nome + "', '" + email + "', '" + senha + "');"
+            print(sql)
+            resposta = processa_comando(conexaoBD, sql)
+            conexaoBD.commit()
+            exibe_resposta(resposta)
+        
+    except Error as erro:
+        print('Erro no main:', erro)    
+
+
+
+def remover_campo (nome):
+    conexaoBD = conecta_banco()
+
+    try: 
+        if (conexaoBD.is_connected()):
+
+            sql = 'select * from usuario'
+            resposta = conexaoBD.cursor()
+            resposta.execute(sql)
+            
+            for result in resposta: sql = "delete from usuario where nome = '" + nome + "';"
+            print(sql)
+            resposta = processa_comando(conexaoBD, sql)
+            conexaoBD.commit()
+            exibe_resposta(resposta)
+        
+    except Error as erro:
+        print('Erro no main:', erro)    
